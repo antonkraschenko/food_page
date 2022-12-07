@@ -23,6 +23,20 @@ window.addEventListener('DOMContentLoaded', () => {
         tabs[i].classList.add('tabheader__item_active');
     }
 
+    tabsWrapper.addEventListener('click', (event) => {
+        const target = event.target;
+
+        if (target && target.classList.contains('tabheader__item')) {
+
+            tabs.forEach((item, i) => {
+                if (item == target) {
+                    hiddenActive();
+                    showActive(i);
+                }
+            });
+        }
+    });
+
     hiddenActive();
     showActive();
 });
