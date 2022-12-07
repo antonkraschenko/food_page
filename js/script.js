@@ -11,7 +11,9 @@ window.addEventListener('DOMContentLoaded', () => {
     function hiddenActive() {
 
         tabsContent.forEach( item => {
-            item.style.display = 'none';
+            // item.style.display = 'none';
+            item.classList.add('hidden', 'fade');
+            item.classList.remove('active');
         });
         tabs.forEach(item => {
             item.classList.remove('tabheader__item_active');
@@ -19,7 +21,9 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     function showActive(i = 0) {
-        tabsContent[i].style.display = 'block';
+        // tabsContent[i].style.display = 'block';
+        tabsContent[i].classList.add('show', 'fade');
+        tabsContent[i].classList.remove('hidden');
         tabs[i].classList.add('tabheader__item_active');
     }
 
@@ -40,5 +44,4 @@ window.addEventListener('DOMContentLoaded', () => {
     hiddenActive();
     showActive();
 });
-
 
