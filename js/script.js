@@ -8,7 +8,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const tabsContent = document.querySelectorAll('.tabcontent');
 
 
-    function hiddenActiv() {
+    function hiddenActive() {
 
         tabsContent.forEach( item => {
             item.style.display = 'none';
@@ -18,7 +18,13 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    hiddenActiv();
+    function showActive(i = 0) {
+        tabsContent[i].style.display = 'block';
+        tabs[i].classList.add('tabheader__item_active');
+    }
+
+    hiddenActive();
+    showActive();
 });
 
 
