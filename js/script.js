@@ -45,19 +45,28 @@ window.addEventListener('DOMContentLoaded', () => {
     showActive();
 
 
+
     // Set Timer 
 
 
-    const deadline = '2022-12-12';
+    const deadline = '2022-12-09';
 
     function getTimeRemaining(endtime) {
-
+        let days, hours, minutes, seconds;
         const t = Date.parse(endtime) - Date.parse(new Date());
 
-        const days = Math.floor(t / (1000 * 60 * 60 * 24));
-        const hours = Math.floor(t / (1000 * 60 *60) % 24);
-        const minutes = Math.floor(t / (1000 * 60) % 60);
-        const seconds = Math.floor((t / 1000) % 60);
+        if ( t <=0 ){
+            days = 0;
+            hours = 0;
+            minutes = 0;
+            seconds = 0;
+        } else {
+
+        days = Math.floor(t / (1000 * 60 * 60 * 24));
+        hours = Math.floor(t / (1000 * 60 *60) % 24);
+        minutes = Math.floor(t / (1000 * 60) % 60);
+        seconds = Math.floor((t / 1000) % 60);
+        }
 
         return {
             't': t,
@@ -85,26 +94,21 @@ window.addEventListener('DOMContentLoaded', () => {
 
             const t = getTimeRemaining(endtime);
 
-            function getZero(i) {
-                if ( i >= 1 && i < 10) {
-                    return '0' + i;
+            function getZero(num) {
+                if ( num >= 0 && num < 10) {
+                    return '0' + num;
                 } else { 
-                    return i;
+                    return num;
                 }
             }
+            days.innerHTML = getZero(t.days);
+            hours.innerHTML = getZero(t.hours);
+            minutes.innerHTML = getZero(t.minutes);
+            seconds.innerHTML = getZero(t.seconds);
 
             if (t.t <= 0) {
                 clearInterval(timer);
-                days.innerHTML = 0;
-                hours.innerHTML = 0;
-                minutes.innerHTML = 0;
-                seconds.innerHTML = 0;
-            } else {
-                days.innerHTML = getZero(t.days);
-                hours.innerHTML = getZero(t.hours);
-                minutes.innerHTML = getZero(t.minutes);
-                seconds.innerHTML = getZero(t.seconds);
-            }
+            } 
         }
     }
 
