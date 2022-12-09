@@ -183,11 +183,12 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
     class Card {
-        constructor(srcImg, alt, title, descr, price, parent) {
+        constructor(srcImg, alt, title, descr, price, parent, ...classes) {
             this.srcImg = srcImg;
             this.imgName = alt;
             this.title = title;
             this.descr = descr;
+            this.classes = classes;
             this.parent = document.querySelector(parent);
             this.price = price;
             this.transfer = 27;
@@ -196,25 +197,34 @@ window.addEventListener('DOMContentLoaded', () => {
 
         changeToUah() {
             this.price = this.price * this.transfer;
-
         }
 
         render() {
-
             const div = document.createElement('div');
-            div.classList.add('menu__item');
+            
+            // проверка на классы если нет то добавляем дефолтный, так же есть возмлжность передать серез рест оператор
+
+            if(this.classes.length === 0) {
+                this.classes = 'menu__item';
+                div.classList.add(this.classes);
+            } else {
+                this.classes.forEach(className => {
+                    div.classList.add(className);
+                });
+            }
+
+            // вариант без передачи клвасса в аргумент
+            // div.classList.add('menu__item');
 
             div.innerHTML = `
-
-                    <img src="${this.srcImg}" alt="${this.alt}">
-                    <h3 class="menu__item-subtitle">${this.title}”</h3>
-                    <div class="menu__item-descr">${this.descr}</div>
-                    <div class="menu__item-divider"></div>
-                    <div class="menu__item-price">
-                        <div class="menu__item-cost">Цена:</div>
-                        <div class="menu__item-total"><span>${this.price}</span> грн/день</div>
-                    </div>
-
+                <img src="${this.srcImg}" alt="${this.alt}">
+                <h3 class="menu__item-subtitle">${this.title}”</h3>
+                <div class="menu__item-descr">${this.descr}</div>
+                <div class="menu__item-divider"></div>
+                <div class="menu__item-price">
+                    <div class="menu__item-cost">Цена:</div>
+                    <div class="menu__item-total"><span>${this.price}</span> грн/день</div>
+                </div>
             `;
             this.parent.append(div);
         }
@@ -226,7 +236,8 @@ window.addEventListener('DOMContentLoaded', () => {
         'Меню "Фитнес"',
         'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!',
         9,
-        '.menu__field .container'
+        '.menu__field .container',
+        'menu__item'
     ).render();
     
     new Card(
