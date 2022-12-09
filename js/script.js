@@ -204,15 +204,13 @@ window.addEventListener('DOMContentLoaded', () => {
             
             // проверка на классы если нет то добавляем дефолтный, так же есть возмлжность передать серез рест оператор
 
-            if(this.classes.length === 0) {
+            if (this.classes.length === 0) {
                 this.classes = 'menu__item';
                 div.classList.add(this.classes);
             } else {
-                this.classes.forEach(className => {
-                    div.classList.add(className);
-                });
+                this.classes.forEach(className => div.classList.add(className));
             }
-
+            
             // вариант без передачи клвасса в аргумент
             // div.classList.add('menu__item');
 
@@ -246,7 +244,8 @@ window.addEventListener('DOMContentLoaded', () => {
         'Меню “Премиум”',
         'В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!',
         20,
-        '.menu__field .container'
+        '.menu__field .container',
+        'menu__item'
     ).render();
 
     new Card(
@@ -255,7 +254,8 @@ window.addEventListener('DOMContentLoaded', () => {
         'Меню "Постное"',
         'Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков.',
         16,
-        '.menu__field .container'
+        '.menu__field .container',
+        'menu__item'
     ).render();
 
 
