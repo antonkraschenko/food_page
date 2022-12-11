@@ -289,33 +289,46 @@ window.addEventListener('DOMContentLoaded', () => {
             const formData = new FormData(form);
             request.send(formData);
 
-            // const request = new XMLHttpRequest();
-            // request.open('POST', 'server.php');
-            // request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-            // const formData = new FormData(form);
-            // const object = {};
-            // formData.forEach((value, key) => {
-            //     object[key] = value;
-            // });
-            // const json = JSON.stringify(object);
-            // request.send(json);
-
 
             request.addEventListener('load', () => {
                 if (request.status === 200) {
                  console.log(request.response);
 
-                    statusMessage.innerText = message.success;
+                 showThanksModal(message.success);
                     form.reset();
+
                     setTimeout(() => {
                         statusMessage.innerText = '';
                     }, 3000);
+
                 } else {
                     statusMessage.innerText = message.failure;
 
                 }
             });
         });
+    }
+
+    function showThanksModal(message) {
+        const prevModal = document.querySelector('.modal__dialog');
+        prevModal.classList.add('hidden');
+
+        const thanksModal = document.createElement('div');
+        thanksModal.classList.add('modal__dialog');
+        thanksModal.innerHTML = `
+        <div class="modal__content">
+            <div data-close class="modal__close">&times;</div>
+            <div class="modal__title">${message}</div>
+        </div>
+        `;
+        document.querySelector('.modal').append(thanksModal);
+
+        setTimeout(()=>{
+            thanksModal.remove();
+            prevModal.classList.remove('hidden');
+            prevModal.classList.add('show');
+        }, 5000);
+
     }
 });
 
