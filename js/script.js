@@ -260,7 +260,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
 /* jshint ignore:end */
 
-
     // Sending forms 
 
     const forms = document.querySelectorAll('form');
@@ -279,49 +278,41 @@ window.addEventListener('DOMContentLoaded', () => {
         form.addEventListener('submit', (event) => {
             event.preventDefault();
 
-            // created status message
-            let statusMessage = document.createElement('div');
+            const statusMessage = document.createElement('div');
             statusMessage.classList.add('message');
             statusMessage.innerText = message.loading;
             form.append(statusMessage);
 
 
-            // 1) вариант когда ми принимаем данные в виде FormData
-            // const request = new XMLHttpRequest();
-            // request.open('POST', 'server.php');
-            // /* jshint ignore:start */
-            // // request.setRequestHeader('Content-type', 'application/json; charset=utf-8') 
-            // настройка нужна если передаем в json формате
-            // /* jshint ignore:end */
-            // const formData = new FormData(form);
-            // request.send(formData);
-            
-            // 2) вариант когда ми принимаем данные в виде JSON
-            // в php нужно дописать $_POST = json_decode( file_get_contents("php://input"), true );
             const request = new XMLHttpRequest();
             request.open('POST', 'server.php');
-            request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
             const formData = new FormData(form);
-            
-            const object = {};
-            formData.forEach((value, key) => {
-                object[key] = value;
-            });
-            console.log(object);
-            const json = JSON.stringify(object);
+            request.send(formData);
 
-            request.send(json);
+            // const request = new XMLHttpRequest();
+            // request.open('POST', 'server.php');
+            // request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+            // const formData = new FormData(form);
+            // const object = {};
+            // formData.forEach((value, key) => {
+            //     object[key] = value;
+            // });
+            // const json = JSON.stringify(object);
+            // request.send(json);
+
 
             request.addEventListener('load', () => {
-                if(request.status === 200) {
-                    console.log(request.response);
+                if (request.status === 200) {
+                 console.log(request.response);
+
                     statusMessage.innerText = message.success;
                     form.reset();
-                    setTimeout(()=> {
+                    setTimeout(() => {
                         statusMessage.innerText = '';
                     }, 3000);
                 } else {
                     statusMessage.innerText = message.failure;
+
                 }
             });
         });
