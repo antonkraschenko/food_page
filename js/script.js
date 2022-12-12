@@ -118,9 +118,7 @@ window.addEventListener('DOMContentLoaded', () => {
     // Make modal window 
 
     const btnModal = document.querySelectorAll('[data-modal]');
-    const btnClose = document.querySelector('[data-close]');
     const modal = document.querySelector('.modal');
-
 
 
     function showModal() {
@@ -159,13 +157,9 @@ window.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', showModalByScrol);
 
 
-    // close click btn
-    btnClose.addEventListener('click', closeModal);
-
-
     // close click modal
     modal.addEventListener('click', (event) => {
-        if (event.target === modal) {
+        if (event.target === modal || event.target.getAttribute('data-close') == '') {
             closeModal();
         }
     });
@@ -178,9 +172,7 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-
     // Class for card 
-
 
     class Card {
         constructor(srcImg, alt, title, descr, price, parent, ...classes) {
@@ -291,18 +283,15 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
             request.addEventListener('load', () => {
+               
                 if (request.status === 200) {
-                 console.log(request.response);
-
-                 showThanksModal(message.success);
+                    
+                    console.log(request.response);
+                    showThanksModal(message.success);
                     form.reset();
-
-                    setTimeout(() => {
-                        statusMessage.innerText = '';
-                    }, 3000);
-
+                    statusMessage.remove();
                 } else {
-                    statusMessage.innerText = message.failure;
+                    showThanksModal(message.failure);
 
                 }
             });
@@ -312,6 +301,7 @@ window.addEventListener('DOMContentLoaded', () => {
     function showThanksModal(message) {
         const prevModal = document.querySelector('.modal__dialog');
         prevModal.classList.add('hidden');
+        showModal();
 
         const thanksModal = document.createElement('div');
         thanksModal.classList.add('modal__dialog');
@@ -327,7 +317,8 @@ window.addEventListener('DOMContentLoaded', () => {
             thanksModal.remove();
             prevModal.classList.remove('hidden');
             prevModal.classList.add('show');
-        }, 5000);
+            closeModal();
+        }, 4000);
 
     }
 });
