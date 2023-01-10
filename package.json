@@ -1,0 +1,22 @@
+{
+  "name": "food_project",
+  "version": "1.0.0",
+  "description": "food project in NUMP",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antonkraschenko/food_page.git"
+  },
+  "author": "Anton",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/antonkraschenko/food_page/issues"
+  },
+  "homepage": "https://github.com/antonkraschenko/food_page#readme",
+  "devDependencies": {
+    "json-serve": "^0.1.0"
+  }
+}
