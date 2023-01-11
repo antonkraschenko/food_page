@@ -194,7 +194,7 @@ window.addEventListener('DOMContentLoaded', () => {
         render() {
             const div = document.createElement('div');
             
-            // проверка на классы если нет то добавляем дефолтный, так же есть возмлжность передать серез рест оператор
+            // проверка на классы если нет то добавляем дефолтный, так же есть возможность передать через рест оператор
 
             if (this.classes.length === 0) {
                 this.classes = 'menu__item';
@@ -203,7 +203,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 this.classes.forEach(className => div.classList.add(className));
             }
             
-            // вариант без передачи клвасса в аргумент
+            // вариант без передачи класса в аргумент
             // div.classList.add('menu__item');
 
             div.innerHTML = `
@@ -252,7 +252,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
 /* jshint ignore:end */
 
-    // Sending forms 
+    // First variant
+    // Sending the forms 
 
     const forms = document.querySelectorAll('form');
 
@@ -263,10 +264,23 @@ window.addEventListener('DOMContentLoaded', () => {
     };
 
     forms.forEach(item => {
-        postData(item);
+        bindPostData(item);
     });
 
-    function postData(form) {
+
+    const postData = async (url, data) => {
+        const req = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: data
+        });
+        return await req.json();
+    };
+   
+
+    function bindPostData(form) {
         form.addEventListener('submit', (event) => {
             event.preventDefault();
 
@@ -277,19 +291,14 @@ window.addEventListener('DOMContentLoaded', () => {
            
             const formData = new FormData(form);
 
-            const object = {};
-            formData.forEach((value, key) => {
-                object[key] = value;
-            });
+            // const object = {};                // old method transform from FormData in obj
+            // formData.forEach((value, key) => {
+            //     object[key] = value;
+            // });
 
-            fetch('server.php', {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                body: JSON.stringify(object)
-            })
-            .then(data => data.text())
+            const json = JSON.stringify(Object.fromEntries(formData.entries()));
+
+            postData('http://localhost:3000/requests', json)
             .then(data => {
                 console.log(data);
                 showThanksModal(message.success);
@@ -329,5 +338,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
     }
 
+    fetch('http://localhost:3000/menu')
+    .then(data => data.json())
+    .then(res => console.log(res));
 });
 
