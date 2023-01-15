@@ -220,23 +220,23 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-       const getResource = async (url) => {
-            const res = await fetch(url);
+    const getResource = async (url) => {
+        const res = await fetch(url);
 
-            if (!res.ok) {
-                // отлавливаем ошибку, так как fetch может ее пропустить
-                throw new Error(`Could not fetch ${url}, status: ${res.status}`);   
-            }
+        if (!res.ok) {
+            // отлавливаем ошибку, так как fetch может ее пропустить
+            throw new Error(`Could not fetch ${url}, status: ${res.status}`);   
+        }
 
-            return await res.json();
-       };
-       getResource('http://localhost:3000/menu')
-       .then(data => {
-            // перебераем каждый елемент масива и делаем деструктуризацию данных
-            data.forEach(({img, altimg, title, descr, price}) => {
-                new Card(img, altimg, title, descr, price, '.menu__field .container').render();
-            });
-       });
+        return await res.json();
+    };
+    getResource('http://localhost:3000/menu')
+    .then(data => {
+        // перебераем каждый елемент масива и делаем деструктуризацию данных
+        data.forEach(({img, altimg, title, descr, price}) => {
+            new Card(img, altimg, title, descr, price, '.menu__field .container').render();
+        });
+    });
 
 
 
@@ -342,8 +342,60 @@ window.addEventListener('DOMContentLoaded', () => {
 
     }
 
-    fetch('http://localhost:3000/menu')
-    .then(data => data.json())
-    .then(res => console.log(res));
+    // SLIDER
+
+    const slides = document.querySelectorAll('.offer__slide');
+    const next = document.querySelector('.offer__slider-next');
+    const prev = document.querySelector('.offer__slider-prev');
+    const current = document.querySelector('#current');
+    const total = document.querySelector('#total');
+
+    let slideIndex = 1;
+
+    function showSlide(n) {
+
+        if ( n > slides.length ) {
+            slideIndex = 1;
+        }
+
+        if( n < 1 ) {
+            slideIndex = slides.length;
+        }
+
+        slides.forEach( item => item.classList.add('hidden'));
+        slides[slideIndex - 1].classList.remove('hidden');
+
+        currentSlide(slideIndex);
+    }
+    
+    function currentSlide(n) {
+        if (n > 10) {
+            current.textContent = slideIndex;
+        } else  {
+            current.textContent = `0${slideIndex}`;
+        }
+    }
+
+    function totalSlide(n) {
+        if (n.length > 9) {
+            total.textContent = n.length;
+        } else {
+            total.textContent = `0${n.length}`;
+        }
+    }
+
+    next.addEventListener('click', () => {
+        showSlide(++slideIndex);
+    });
+
+    prev.addEventListener('click', () => {
+        showSlide(--slideIndex);
+    });
+
+    // call
+    
+    showSlide(slideIndex);
+    totalSlide(slides);
+    
 });
 
