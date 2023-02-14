@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/antonkraschenko/food_page#readme",
   "devDependencies": {
-    "json-serve": "^0.1.0"
+    "json-server": "^0.17.1"
   }
 }
